@@ -1,7 +1,5 @@
 package com.andregois.digioapp.domain
 
-import com.andregois.digiodemo.domain.Product
-import com.andregois.digiodemo.domain.Spotlight
 import com.google.gson.annotations.SerializedName
 
 data class DigioResponse(
