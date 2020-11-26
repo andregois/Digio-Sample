@@ -16,12 +16,10 @@ class MainViewModel @ViewModelInject constructor(
     private val _response = MutableLiveData<Result<DigioResponse>>()
     val response: LiveData<Result<DigioResponse>> = _response
 
-
     init {
         _response.postValue(Result.loading(null))
         fetchData()
     }
-
 
     fun fetchData() {
         viewModelScope.launch {

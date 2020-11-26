@@ -6,14 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <ProgressBar
+
+
+    <include
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        layout="@layout/loading_progress_bar"
         android:layout_centerInParent="true"/>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -45,6 +49,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spotlightList"
                 android:layout_width="0dp"
@@ -63,29 +69,31 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/digioTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="digio"
                 android:textColor="@color/digio_purple"
                 android:textSize="18sp"
+                android:text="digio"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spotlightList" />
+                app:layout_constraintTop_toBottomOf="@+id/spotlightList"
+                android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/cashTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Cash"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
+                app:layout_constraintBottom_toBottomOf="@+id/digioTextView"
+                app:layout_constraintStart_toEndOf="@+id/digioTextView"
+                app:layout_constraintTop_toTopOf="@+id/digioTextView"
+                android:visibility="gone"/>
 
             <include
                 android:id="@+id/cardCash"
@@ -99,10 +107,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/digioTextView" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/productTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -112,7 +120,8 @@
                 android:textColor="@color/digio_purple"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardCash" />
+                app:layout_constraintTop_toBottomOf="@+id/cardCash"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productList"
@@ -123,7 +132,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/productTextView"
                 tools:itemCount="3"
                 tools:listitem="@layout/card_product">
 

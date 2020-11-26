@@ -8,18 +8,27 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.andregois.digioapp.R
 import com.andregois.digioapp.domain.Product
+import com.andregois.digioapp.domain.Spotlight
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.card_product.view.*
+import kotlinx.android.synthetic.main.cars_spotlight.view.*
 
 class ProductAdapter(private val productList: MutableList<Product>) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
+    private var clickListener: ((item: Product) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (item: Product) -> Unit) {
+        this.clickListener = listener
+    }
+
     companion object {
-        const val PRODUCT_WIDTH = 600
+        const val PRODUCT_WIDTH = 200
         const val PRODUCT_HEIGHT = 200
     }
 
@@ -30,7 +39,9 @@ class ProductAdapter(private val productList: MutableList<Product>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(productList[position])
+        val item = productList[position]
+        holder.bindItems(item)
+        holder.imageView.setOnClickListener { clickListener?.invoke(item) }
     }
 
     override fun getItemCount(): Int {
@@ -43,13 +54,14 @@ class ProductAdapter(private val productList: MutableList<Product>) :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItems(item: Product) {
-            val imageView = itemView.findViewById<ImageView>(R.id.productImage)
+        internal val imageView: ImageView = itemView.productImage
 
+        fun bindItems(item: Product) {
             Glide.with(itemView.context)
                 .load(item.imageURL)
                 .apply(RequestOptions().override(PRODUCT_WIDTH, PRODUCT_HEIGHT))
                 .fitCenter()
+                .placeholder(R.drawable.logo)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,

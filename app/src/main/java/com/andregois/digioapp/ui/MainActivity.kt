@@ -17,6 +17,7 @@ import com.andregois.digioapp.utils.Status
 import com.andregois.digioapp.adaper.ProductAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.cars_spotlight.*
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     it.data?.let { response ->
                         setupSpotlightRV(response.spotlight)
-                        setupProductRV(response.products)
                         setupCashImageView(response.cash)
+                        setupProductRV(response.products)
                         progressBar.visibility = View.GONE
                     }
                 }
@@ -56,12 +57,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSpotlightRV(spotlights: List<Spotlight>) {
         spotlightList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        spotlightList.adapter = SpotlightAdapter(spotlights)
+        val spotlightAdapter = SpotlightAdapter(spotlights.toMutableList())
+        spotlightAdapter.run {
+            setOnItemClickListener{
+                Toast.makeText(applicationContext, it.description, Toast.LENGTH_SHORT).show()
+            }
+        }
+        spotlightList.adapter = spotlightAdapter
     }
 
     private fun setupProductRV(products: List<Product>) {
         productList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        productList.adapter = ProductAdapter(products.toMutableList())
+        val productAdapter = ProductAdapter(products.toMutableList())
+        productAdapter.run {
+            setOnItemClickListener{
+                showSnackDetail()
+                Toast.makeText(applicationContext, it.description, Toast.LENGTH_SHORT).show()
+            }
+        }
+        productList.adapter = productAdapter
+        productTextView.visibility = View.VISIBLE
+
+    }
+
+    private fun showSnackDetail() {
+        val snackBar = Snackbar.make(
+            findViewById(R.id.scrollView), "Replace with your own action",
+            Snackbar.LENGTH_LONG
+        ).setAction("Action", null)
+        snackBar.show()
     }
 
     private fun setupCashImageView(cash: Cash) {
@@ -69,6 +93,8 @@ class MainActivity : AppCompatActivity() {
                 .load(cash.bannerURL)
                 .apply(RequestOptions().override(1000, 600))
                 .into(spotlightImage)
+        cashTextView.visibility = View.VISIBLE
+        digioTextView.visibility = View.VISIBLE
     }
 
 }
