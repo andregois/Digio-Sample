@@ -1,36 +1,34 @@
 package com.andregois.digioapp.data
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andregois.digioapp.domain.DigioResponse
-import com.andregois.digioapp.utils.Result
+import com.andregois.digioapp.utils.ApiResult
 import kotlinx.coroutines.launch
 
 class MainViewModel @ViewModelInject constructor(
-    private val digioRepositoryImpl: DigioRepository
+    private val digioRepository: DigioRepository
 ) : ViewModel() {
 
-    private val _response = MutableLiveData<Result<DigioResponse>>()
-    val response: LiveData<Result<DigioResponse>> = _response
+    companion object {
+        const val TAG = "MainViewModel"
+    }
+
+    private val _response = MutableLiveData<ApiResult<DigioResponse>>()
+    val response: LiveData<ApiResult<DigioResponse>> = _response
 
     init {
-        _response.postValue(Result.loading(null))
+        _response.postValue(ApiResult.loading(null))
         fetchData()
     }
 
     fun fetchData() {
         viewModelScope.launch {
-            try {
-                _response.value = Result.success(digioRepositoryImpl.getApiData())
-            } catch (exception: Exception) {
-                _response.value = Result.error(
-                    data = null,
-                    message = exception.message ?: "Error Occurred!"
-                )
-            }
+            _response.value = digioRepository.getApiData()
         }
     }
 }

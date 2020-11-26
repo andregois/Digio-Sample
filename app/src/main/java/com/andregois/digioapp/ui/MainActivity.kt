@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { response ->
-                        setupSpotlightRV(response.spotlight)
-                        setupCashImageView(response.cash)
-                        setupProductRV(response.products)
+                        response.spotlight?.let { spotLightList -> setupSpotlightRV(spotLightList) }
+                        response.cash?.let { cash -> setupCashImageView(cash) }
+                        response.products?.let { productList -> setupProductRV(productList) }
                         progressBar.visibility = View.GONE
                     }
                 }

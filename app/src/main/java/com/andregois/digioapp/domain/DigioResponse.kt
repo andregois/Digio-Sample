@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class DigioResponse(
     @SerializedName("cash")
-    val cash: Cash,
+    val cash: Cash?,
     @SerializedName("products")
-    val products: List<Product>,
+    val products: List<Product>?,
     @SerializedName("spotlight")
-    val spotlight: List<Spotlight>
+    val spotlight: List<Spotlight>?
 )
 
 
