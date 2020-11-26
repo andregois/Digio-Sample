@@ -2,6 +2,8 @@ package com.andregois.digioapp.di
 
 import com.andregois.digioapp.data.DigioDataSource
 import com.andregois.digioapp.data.DigioDataSourceImpl
+import com.andregois.digioapp.data.DigioRepository
+import com.andregois.digioapp.data.DigioRepositoryImpl
 import com.andregois.digioapp.retrofit.DigioApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -55,6 +57,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDigioDataSource(digioApi: DigioDataSourceImpl): DigioDataSource = digioApi
+
+    @Singleton
+    @Provides
+    fun provideDigioRepository(digioRepository: DigioRepositoryImpl): DigioRepository = digioRepository
 
 
 }

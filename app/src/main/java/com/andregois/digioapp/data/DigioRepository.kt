@@ -6,9 +6,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DigioRepository @Inject constructor(private val remoteDataSource: DigioDataSource) {
-
-    suspend fun getApiData(): DigioResponse {
-        return remoteDataSource.getDigioData()
-    }
+interface DigioRepository {
+    suspend fun getApiData(): DigioResponse
 }
